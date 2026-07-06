@@ -33,6 +33,11 @@ function PlayerFrame({
   const [isResolvingAnime, setIsResolvingAnime] = useState(false);
   const [animeResolveError, setAnimeResolveError] = useState(null);
 
+  // Loading & Timeout states
+  const [isPlayerLoading, setIsPlayerLoading] = useState(true);
+  const [playerTimeout, setPlayerTimeout] = useState(false);
+  const loadingTimeoutRef = useRef(null);
+
   // Derive season/episode from URL props directly instead of syncing via useEffect
   const isTVOrAnime = mediaType === 'tv' || mediaType === 'anime';
   const activeSeason = isTVOrAnime ? (season || 1) : null;
@@ -55,6 +60,36 @@ function PlayerFrame({
     : null;
 
   const embedUrl = isAnimeServer ? animeEmbedUrl : defaultEmbedUrl;
+
+  // Handle iframe load timeout
+  useEffect(() => {
+    if (selectedPlayer && embedUrl) {
+      setIsPlayerLoading(true);
+      setPlayerTimeout(false);
+      
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
+      }
+      
+      loadingTimeoutRef.current = setTimeout(() => {
+        setPlayerTimeout(true);
+        setIsPlayerLoading(false);
+      }, 15000); // 15 seconds timeout
+    }
+    
+    return () => {
+      if (loadingTimeoutRef.current) {
+        clearTimeout(loadingTimeoutRef.current);
+      }
+    };
+  }, [embedUrl, selectedPlayer]);
+
+  const handleIframeLoad = () => {
+    setIsPlayerLoading(false);
+    if (loadingTimeoutRef.current) {
+      clearTimeout(loadingTimeoutRef.current);
+    }
+  };
 
   // Resolve Anime Server URL
   useEffect(() => {
@@ -433,19 +468,46 @@ function PlayerFrame({
               <p className="text-zinc-300 text-sm font-medium">{animeResolveError}</p>
             </div>
           </div>
+        ) : playerTimeout ? (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center px-4 max-w-sm">
+              <svg className="w-12 h-12 text-yellow-500 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <h3 className="text-zinc-200 font-semibold mb-2">Server Timeout</h3>
+              <p className="text-zinc-400 text-sm mb-4">The server took too long to respond. It may be blocked on your network or experiencing high traffic.</p>
+              <button
+                onClick={() => setSelectedPlayer(null)}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded transition-colors"
+              >
+                Change Server
+              </button>
+            </div>
+          </div>
         ) : (
-          <iframe
-            key={`${selectedPlayer}-${tmdbId}-${activeSeason}-${activeEpisode}-${animeLang}`}
-            ref={iframeRef}
-            src={embedUrl}
-            className="absolute top-0 left-0 w-full h-full border-0"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen *"
-            title="Video Player"
-            referrerPolicy={iframeReferrer}
-            sandbox={iframeSandbox}
-            loading="eager"
-          />
+          <>
+            {isPlayerLoading && !playerTimeout && (
+              <div className="absolute inset-0 flex items-center justify-center bg-zinc-900/80 z-10">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-red-600 mx-auto mb-3"></div>
+                  <p className="text-zinc-400 text-xs sm:text-sm">Loading Server...</p>
+                </div>
+              </div>
+            )}
+            <iframe
+              key={`${selectedPlayer}-${tmdbId}-${activeSeason}-${activeEpisode}-${animeLang}`}
+              ref={iframeRef}
+              src={embedUrl}
+              className="absolute top-0 left-0 w-full h-full border-0"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen *"
+              title="Video Player"
+              referrerPolicy={iframeReferrer}
+              sandbox={iframeSandbox}
+              loading="eager"
+              onLoad={handleIframeLoad}
+            />
+          </>
         )}
       </div>
 

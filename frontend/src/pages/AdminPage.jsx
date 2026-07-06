@@ -303,34 +303,34 @@ export default function AdminPage() {
         </div>
 
         {/* --- STATS CARDS --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-zinc-900 dark:to-black border border-gray-200 dark:border-zinc-800 rounded-xl p-5 shadow-sm dark:shadow-lg flex items-center justify-between group hover:border-gray-300 dark:hover:border-zinc-700 transition-colors">
-            <div>
-              <p className="text-gray-500 dark:text-zinc-400 text-sm font-medium mb-1">Total Users</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left">{stats.total}</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="relative bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-zinc-900 dark:to-black border border-gray-200 dark:border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm dark:shadow-lg flex flex-col md:flex-row justify-between md:items-center group hover:border-gray-300 dark:hover:border-zinc-700 transition-colors min-h-[100px] md:min-h-0">
+            <div className="pr-10 md:pr-0 flex flex-col h-full justify-between md:justify-center flex-1">
+              <p className="text-gray-500 dark:text-zinc-400 text-xs md:text-sm font-medium leading-tight md:mb-1">Total Users</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left mt-1 md:mt-0">{stats.total}</p>
             </div>
-            <div className="p-3 bg-gray-100 dark:bg-zinc-800/50 rounded-lg text-gray-600 dark:text-zinc-300"><UsersIcon /></div>
+            <div className="absolute top-4 right-4 md:static p-2 md:p-3 bg-gray-100 dark:bg-zinc-800/50 rounded-lg text-gray-600 dark:text-zinc-300 shrink-0"><UsersIcon /></div>
           </div>
-          <div className="bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-green-900/20 dark:to-black border border-gray-200 dark:border-green-900/30 rounded-xl p-5 shadow-sm dark:shadow-lg flex items-center justify-between group hover:border-green-300 dark:hover:border-green-800/50 transition-colors">
-            <div>
-              <p className="text-gray-500 dark:text-green-400 text-sm font-medium mb-1">Approved</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left">{stats.approved}</p>
+          <div className="relative bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-green-900/20 dark:to-black border border-gray-200 dark:border-green-900/30 rounded-xl p-4 md:p-5 shadow-sm dark:shadow-lg flex flex-col md:flex-row justify-between md:items-center group hover:border-green-300 dark:hover:border-green-800/50 transition-colors min-h-[100px] md:min-h-0">
+            <div className="pr-10 md:pr-0 flex flex-col h-full justify-between md:justify-center flex-1">
+              <p className="text-gray-500 dark:text-green-400 text-xs md:text-sm font-medium leading-tight md:mb-1">Approved</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left mt-1 md:mt-0">{stats.approved}</p>
             </div>
-            <div className="p-3 bg-gray-100 dark:bg-green-900/30 rounded-lg text-gray-600 dark:text-green-400"><UserCheckIcon /></div>
+            <div className="absolute top-4 right-4 md:static p-2 md:p-3 bg-gray-100 dark:bg-green-900/30 rounded-lg text-gray-600 dark:text-green-400 shrink-0"><UserCheckIcon /></div>
           </div>
-          <div className="bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-yellow-900/20 dark:to-black border border-gray-200 dark:border-yellow-900/30 rounded-xl p-5 shadow-sm dark:shadow-lg flex items-center justify-between group hover:border-yellow-300 dark:hover:border-yellow-800/50 transition-colors">
-            <div>
-              <p className="text-gray-500 dark:text-yellow-400 text-sm font-medium mb-1">Pending Requests</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left">{stats.pending}</p>
+          <div className="relative bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-yellow-900/20 dark:to-black border border-gray-200 dark:border-yellow-900/30 rounded-xl p-4 md:p-5 shadow-sm dark:shadow-lg flex flex-col md:flex-row justify-between md:items-center group hover:border-yellow-300 dark:hover:border-yellow-800/50 transition-colors min-h-[100px] md:min-h-0">
+            <div className="pr-10 md:pr-0 flex flex-col h-full justify-between md:justify-center flex-1">
+              <p className="text-gray-500 dark:text-yellow-400 text-xs md:text-sm font-medium leading-tight md:mb-1">Pending Requests</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left mt-1 md:mt-0">{stats.pending}</p>
             </div>
-            <div className="p-3 bg-gray-100 dark:bg-yellow-900/30 rounded-lg text-gray-600 dark:text-yellow-400"><ClockIcon /></div>
+            <div className="absolute top-4 right-4 md:static p-2 md:p-3 bg-gray-100 dark:bg-yellow-900/30 rounded-lg text-gray-600 dark:text-yellow-400 shrink-0"><ClockIcon /></div>
           </div>
-          <div className="bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-red-900/20 dark:to-black border border-gray-200 dark:border-red-900/30 rounded-xl p-5 shadow-sm dark:shadow-lg flex items-center justify-between group hover:border-red-300 dark:hover:border-red-800/50 transition-colors">
-            <div>
-              <p className="text-gray-500 dark:text-red-400 text-sm font-medium mb-1">Revoked / Rejected</p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left">{stats.revokedRejected}</p>
+          <div className="relative bg-white dark:bg-zinc-950 dark:bg-gradient-to-br dark:from-red-900/20 dark:to-black border border-gray-200 dark:border-red-900/30 rounded-xl p-4 md:p-5 shadow-sm dark:shadow-lg flex flex-col md:flex-row justify-between md:items-center group hover:border-red-300 dark:hover:border-red-800/50 transition-colors min-h-[100px] md:min-h-0">
+            <div className="pr-10 md:pr-0 flex flex-col h-full justify-between md:justify-center flex-1">
+              <p className="text-gray-500 dark:text-red-400 text-xs md:text-sm font-medium leading-tight md:mb-1">Revoked / Rejected</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white group-hover:scale-105 transition-transform origin-left mt-1 md:mt-0">{stats.revokedRejected}</p>
             </div>
-            <div className="p-3 bg-gray-100 dark:bg-red-900/30 rounded-lg text-gray-600 dark:text-red-400"><ShieldExclamationIcon /></div>
+            <div className="absolute top-4 right-4 md:static p-2 md:p-3 bg-gray-100 dark:bg-red-900/30 rounded-lg text-gray-600 dark:text-red-400 shrink-0"><ShieldExclamationIcon /></div>
           </div>
         </div>
 
@@ -434,7 +434,7 @@ export default function AdminPage() {
                         if (u.status !== 'approved' && u.status !== 'revoked') return <span className="text-gray-400 dark:text-zinc-600">-</span>;
                         const access = getAccessRemaining(u.expiresAt, u.isPermanent);
                         return (
-                          <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                          <span className={`inline-block whitespace-nowrap px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                             access.type === 'permanent' ? 'bg-green-100 dark:bg-green-500/10 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-500/20' :
                             access.type === 'expired' ? 'bg-red-100 dark:bg-red-500/10 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/20' :
                             access.type === 'warning' ? 'bg-orange-100 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/20' :
@@ -619,7 +619,7 @@ export default function AdminPage() {
                     </div>
                     <div className="flex justify-between items-center mb-3">
                       <span className="text-gray-500 dark:text-zinc-400 text-sm">Status</span>
-                      <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${
+                      <span className={`inline-block whitespace-nowrap px-2 py-0.5 rounded text-xs font-bold uppercase ${
                         selectedUser.status === 'approved' ? 'text-green-700 bg-green-100 dark:text-green-400 dark:bg-green-500/10' : 
                         selectedUser.status === 'pending' ? 'text-yellow-700 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-500/10' : 
                         selectedUser.status === 'revoked' ? 'text-orange-700 bg-orange-100 dark:text-orange-400 dark:bg-orange-500/10' :
@@ -634,7 +634,7 @@ export default function AdminPage() {
                         if (selectedUser.status !== 'approved' && selectedUser.status !== 'revoked') return <span className="text-gray-400 dark:text-zinc-600">-</span>;
                         const access = getAccessRemaining(selectedUser.expiresAt, selectedUser.isPermanent);
                         return (
-                          <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${
+                          <span className={`inline-block whitespace-nowrap px-2 py-0.5 rounded text-xs font-bold uppercase ${
                             access.type === 'permanent' ? 'text-green-700 bg-green-100 dark:text-green-400 dark:bg-green-500/10' :
                             access.type === 'expired' ? 'text-red-700 bg-red-100 dark:text-red-400 dark:bg-red-500/10' :
                             access.type === 'warning' ? 'text-orange-700 bg-orange-100 dark:text-orange-400 dark:bg-orange-500/10' :
