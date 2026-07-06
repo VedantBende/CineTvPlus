@@ -74,8 +74,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Extra indexes if needed (clerkUserId and email are already unique/indexed in field definitions)
-// userSchema.index({...}); 
-userSchema.index({ expiresAt: 1 });
+userSchema.index({ status: 1, expiresAt: 1 });
 
 const User = mongoose.model('User', userSchema);
 

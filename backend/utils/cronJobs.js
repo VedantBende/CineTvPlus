@@ -3,10 +3,9 @@ import User from '../models/User.js';
 import { sendEmail } from './email.js';
 import { getStatusEmailContent } from './emailTemplates.js';
 
-// Run every day at 5:30 AM
+// Run every minute for real-time revocation
 export const startCronJobs = () => {
-  cron.schedule('30 5 * * *', async () => {
-    console.log('⏳ Running daily access revocation check...');
+  cron.schedule('* * * * *', async () => {
     try {
       const expiredUsers = await User.find({
         status: 'approved',
@@ -41,8 +40,6 @@ export const startCronJobs = () => {
               .catch(err => console.error(`❌ Background email failed for ${user.email}:`, err));
           }
         }
-      } else {
-        console.log(`✅ Daily check complete. No users to revoke.`);
       }
     } catch (error) {
       console.error('❌ Error during daily access revocation cron:', error);

@@ -50,7 +50,7 @@ const DURATION_LABELS = {
         <div style="background:#222;padding:16px;border-radius:8px;margin:20px 0;">
           <p style="margin:0 0 8px;font-size:15px;color:#ccc;"><strong>Access Duration:</strong> ${durationText}</p>
           <p style="margin:0 0 12px;font-size:15px;color:#ccc;"><strong>Access Ends:</strong> ${formattedDate}</p>
-          <p style="margin:0;font-size:13px;color:#f87171;">After this date, your account access will automatically be revoked.</p>
+          <p style="margin:0;font-size:13px;color:#f87171;">After this date & time, your account access will automatically be revoked.</p>
         </div>
       `;
     }
