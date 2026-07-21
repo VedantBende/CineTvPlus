@@ -201,19 +201,19 @@ function MovieDetails() {
 
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 mb-3 sm:mb-4 md:mb-6">
             {movie.rating && (
-              <div className="flex items-center space-x-1 sm:space-x-2 bg-yellow-500 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm">
-                <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex items-center space-x-1 sm:space-x-1.5 bg-[#EAB308] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm shadow-md">
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <span className="text-white font-bold">{formatRating(movie.rating)}</span>
               </div>
             )}
             {movie.runtime && (
-              <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm backdrop-blur-sm">{movie.runtime} min</span>
+              <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-md">{movie.runtime} min</span>
             )}
-            <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm backdrop-blur-sm">Movie</span>
+            <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-md">Movie</span>
             {movie.genres && movie.genres.length > 0 && (
-              <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm line-clamp-1 backdrop-blur-sm">
+              <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold line-clamp-1 shadow-md">
                 {movie.genres.slice(0, 2).map(g => g.name).join(', ')}
               </span>
             )}
@@ -221,26 +221,24 @@ function MovieDetails() {
 
 
 
-          <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-5">
             <button
               onClick={handleWatch}
-              className="bg-white text-black px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 rounded text-sm sm:text-base font-semibold hover:bg-gray-200 transition-all flex items-center space-x-1.5 sm:space-x-2 shadow-lg transform hover:scale-105 touch-target"
+              className="bg-white text-black px-6 py-2.5 sm:px-8 sm:py-3 rounded-xl text-sm sm:text-base font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 shadow-xl hover:-translate-y-1 touch-target"
             >
-              <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
               </svg>
               <span>Play</span>
             </button>
 
-
-
             {isSignedIn && (
               <button
                 onClick={toggleWatchlist}
                 disabled={watchlistLoading}
-                className="bg-white/10 dark:bg-gray-700 dark:bg-opacity-70 text-white px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 rounded text-sm sm:text-base font-semibold hover:bg-white/20 dark:hover:bg-opacity-90 transition-all flex items-center space-x-1.5 sm:space-x-2 backdrop-blur-sm disabled:opacity-50 touch-target border border-white/20 dark:border-transparent shadow-md"
+                className="bg-black/40 hover:bg-black/60 border border-white/20 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 flex items-center justify-center space-x-2 backdrop-blur-md shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 touch-target"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" fill={isInWatchlist ? '#E50914' : 'none'} stroke={isInWatchlist ? '#E50914' : 'currentColor'} viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill={isInWatchlist ? '#E50914' : 'none'} stroke={isInWatchlist ? '#E50914' : 'currentColor'} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                 </svg>
                 <span className="hidden xs:inline">{isInWatchlist ? 'Remove from List' : 'Add to My List'}</span>
@@ -253,9 +251,9 @@ function MovieDetails() {
                 href={`https://www.youtube.com/watch?v=${movie.trailer}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 dark:bg-gray-700 dark:bg-opacity-70 text-white px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 rounded text-sm sm:text-base font-semibold hover:bg-white/20 dark:hover:bg-opacity-90 transition-all flex items-center space-x-1.5 sm:space-x-2 backdrop-blur-sm touch-target border border-white/20 dark:border-transparent shadow-md"
+                className="bg-black/40 hover:bg-black/60 border border-white/20 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 flex items-center justify-center space-x-2 backdrop-blur-md shadow-lg hover:-translate-y-1 touch-target"
               >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/>
                 </svg>
                 <span>Trailer</span>
@@ -351,25 +349,45 @@ function MovieDetails() {
 
 
 
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 sm:p-5 md:p-6 border border-gray-100 dark:border-transparent transition-colors">
-              <h3 className="text-gray-900 dark:text-white text-base sm:text-lg font-bold mb-3 sm:mb-4 transition-colors">Details</h3>
-              <div className="space-y-2 sm:space-y-3">
+            <div className="bg-white dark:bg-[#141414] rounded-xl p-5 sm:p-6 border border-gray-100 dark:border-[#262626] shadow-sm transition-colors">
+              <h3 className="text-gray-900 dark:text-white text-base sm:text-lg font-bold mb-4 transition-colors flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#E50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Details
+              </h3>
+              <div className="flex flex-col divide-y divide-gray-100 dark:divide-[#262626]">
                 {movie.year && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">Release Year</span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">{movie.year}</p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-sm font-medium">Release Year</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{movie.year}</span>
                   </div>
                 )}
                 {movie.runtime && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">Runtime</span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">{movie.runtime} minutes</p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm font-medium">Runtime</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{movie.runtime} minutes</span>
                   </div>
                 )}
                 {movie.rating && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">Rating</span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">{movie.rating}/10</p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <span className="text-sm font-medium">Rating</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{movie.rating}/10</span>
                   </div>
                 )}
               </div>

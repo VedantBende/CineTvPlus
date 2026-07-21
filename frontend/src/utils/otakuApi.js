@@ -162,6 +162,16 @@ export const searchAnime = async (searchQuery, page = 1) => {
   }
 };
 
+// Helper to extract season number from title
+function extractSeasonNumber(title) {
+  if (!title) return 1;
+  const match = title.match(/Season (\d+)|(\d+)(?:st|nd|rd|th) Season/i);
+  if (match) {
+    return parseInt(match[1] || match[2], 10);
+  }
+  return 1;
+}
+
 export const fetchAnimeDetails = async (id) => {
   const query = `
     query ($id: Int) {
@@ -243,18 +253,27 @@ export const fetchAnimeDetails = async (id) => {
       ?.filter(n => n.mediaRecommendation && n.mediaRecommendation.type === 'ANIME')
       ?.map(n => mapToFrontendFormat(n.mediaRecommendation)) || [];
 
+    const titleStr = media.title.english || media.title.romaji || media.title.native;
+    const extractedSeason = extractSeasonNumber(titleStr);
+    const epCount = media.episodes || (media.nextAiringEpisode ? media.nextAiringEpisode.episode - 1 : null);
+
     return {
       tmdbId: media.id.toString(),
-      title: media.title.english || media.title.romaji || media.title.native,
+      title: titleStr,
       url: media.coverImage.extraLarge || media.coverImage.large,
       backdrop: media.bannerImage || media.coverImage.extraLarge,
       rating: media.averageScore ? (media.averageScore / 10).toFixed(1) : 'N/A',
       year: media.startDate && media.startDate.year ? media.startDate.year : null,
       overview: media.description ? media.description.replace(/<[^>]*>?/gm, '') : '',
       runtime: media.duration,
-      seasons: 1,
-      episodes: media.episodes || (media.nextAiringEpisode ? media.nextAiringEpisode.episode - 1 : null),
-      seasonsData: [],
+      currentSeason: extractedSeason,
+      seasons: extractedSeason,
+      episodes: epCount,
+      seasonsData: [{ 
+        season_number: extractedSeason, 
+        episode_count: epCount || 1, 
+        name: `Season ${extractedSeason}` 
+      }],
       genres: media.genres ? media.genres.map(g => ({ name: g })) : [],
       cast: cast,
       related: related,

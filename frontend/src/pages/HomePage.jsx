@@ -538,24 +538,24 @@ function HomePage() {
                   </p>
                 )}
 
-                <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
+                <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-5">
                   <button 
                     onClick={() => {
                       const isEpisodic = movie.media_type === 'tv' || movie.type === 'tv' || movie.media_type === 'anime' || movie.type === 'anime';
                       navigate(`/watch?id=${movie.tmdbId}&type=${movie.media_type || 'movie'}${isEpisodic ? '&season=1&episode=1' : ''}`);
                     }}
-                    className="bg-netflix-red text-white hover:bg-red-700 dark:bg-white dark:hover:bg-gray-200 dark:text-black px-4 py-2 xs:px-5 xs:py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 lg:px-10 lg:py-4 rounded-lg text-xs xs:text-sm sm:text-base md:text-lg font-bold transition-all flex items-center space-x-1.5 xs:space-x-2 sm:space-x-2.5 shadow-xl transform hover:scale-105 active:scale-95 touch-target"
+                    className="bg-white text-black px-6 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-xl text-sm sm:text-base md:text-lg font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 shadow-xl hover:-translate-y-1 touch-target"
                   >
-                    <svg className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M8 5v14l11-7z" />
                     </svg>
                     <span>Play</span>
                   </button>
                   <button 
                     onClick={() => navigate(`/${movie.media_type === 'anime' ? 'tv' : (movie.media_type || 'movie')}/${movie.tmdbId}`, { state: { isAnimeMovie: movie.media_type === 'anime' && movie.format === 'MOVIE' } })}
-                    className="bg-transparent hover:bg-gray-100 dark:hover:bg-white/10 text-white hover:text-gray-900 dark:hover:text-white border border-white/50 px-4 py-2 xs:px-5 xs:py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3.5 lg:px-10 lg:py-4 rounded-lg text-xs xs:text-sm sm:text-base md:text-lg font-semibold transition-all flex items-center space-x-1.5 xs:space-x-2 sm:space-x-2.5 shadow-xl hover:scale-105 active:scale-95 touch-target"
+                    className="bg-black/40 hover:bg-black/60 border border-white/20 text-white px-5 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-xl text-sm sm:text-base md:text-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 backdrop-blur-md shadow-lg hover:-translate-y-1 touch-target"
                   >
-                    <svg className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>See More</span>

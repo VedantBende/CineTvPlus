@@ -95,97 +95,111 @@ function SettingsPage() {
         </h1>
 
         {/* Account Info */}
-        <div className="bg-gray-50 dark:bg-netflix-gray border border-gray-200 dark:border-transparent rounded-lg p-4 sm:p-5 md:p-6 mb-4 sm:mb-5 md:mb-6 transition-colors">
-          <h2 className="text-gray-900 dark:text-white text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 transition-colors">
+        <div className="bg-white dark:bg-[#141414] border border-gray-100 dark:border-[#262626] rounded-xl p-5 sm:p-6 mb-5 sm:mb-6 shadow-sm transition-colors">
+          <h2 className="text-gray-900 dark:text-white text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#E50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
             Account
           </h2>
-          <div className="space-y-3 sm:space-y-4">
-            <div>
-              <label className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">Email</label>
-              <p className="text-gray-800 dark:text-white text-sm sm:text-base break-all transition-colors">
-                {user?.primaryEmailAddress?.emailAddress}
-              </p>
+          <div className="flex flex-col divide-y divide-gray-100 dark:divide-[#262626]">
+            <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                <svg className="w-4 h-4 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm font-medium">Email</span>
+              </div>
+              <span className="text-gray-900 dark:text-white font-semibold text-sm break-all">{user?.primaryEmailAddress?.emailAddress}</span>
             </div>
-            <div>
-              <label className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">Member since</label>
-              <p className="text-gray-800 dark:text-white text-sm sm:text-base transition-colors">
-                {new Date(user?.createdAt).toLocaleDateString()}
-              </p>
+            <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                <svg className="w-4 h-4 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span className="text-sm font-medium">Member since</span>
+              </div>
+              <span className="text-gray-900 dark:text-white font-semibold text-sm">{new Date(user?.createdAt).toLocaleDateString()}</span>
             </div>
           </div>
         </div>
 
         {/* Appearance */}
-        <div className="bg-gray-50 dark:bg-netflix-gray border border-gray-200 dark:border-transparent rounded-lg p-4 sm:p-5 md:p-6 mb-4 sm:mb-5 md:mb-6 transition-colors">
-          <h2 className="text-gray-900 dark:text-white text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 transition-colors">
+        <div className="bg-white dark:bg-[#141414] border border-gray-100 dark:border-[#262626] rounded-xl p-5 sm:p-6 mb-5 sm:mb-6 shadow-sm transition-colors">
+          <h2 className="text-gray-900 dark:text-white text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#E50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
             Appearance
           </h2>
           
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-            <div className="flex-1">
-              <h3 className="text-gray-900 dark:text-white font-medium text-sm sm:text-base transition-colors">Theme</h3>
-              <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-0.5 transition-colors">
+          <div className="py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-gray-900 dark:text-white font-semibold text-sm">Theme</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-0.5">
                 Choose your preferred theme
               </p>
             </div>
-            <div className="flex space-x-2 sm:space-x-3 md:space-x-4">
-              <button
-                onClick={() => theme === 'light' && toggleTheme()}
-                className={`flex-1 sm:flex-none px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded text-sm sm:text-base font-medium transition-all touch-target ${
-                  theme === 'dark'
-                    ? 'bg-netflix-red text-white shadow-lg'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                }`}
-              >
-                Dark
-              </button>
+            <div className="flex p-1 bg-gray-100 dark:bg-[#1f1f1f] rounded-lg border border-gray-200 dark:border-[#2a2a2a]">
               <button
                 onClick={() => theme === 'dark' && toggleTheme()}
-                className={`flex-1 sm:flex-none px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 rounded text-sm sm:text-base font-medium transition-all touch-target ${
+                className={`px-6 py-2 rounded-md text-sm font-semibold transition-all ${
                   theme === 'light'
-                    ? 'bg-netflix-red text-white shadow-lg'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                    ? 'bg-white dark:bg-[#2a2a2a] text-gray-900 dark:text-white shadow-sm'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
                 }`}
               >
                 Light
+              </button>
+              <button
+                onClick={() => theme === 'light' && toggleTheme()}
+                className={`px-6 py-2 rounded-md text-sm font-semibold transition-all ${
+                  theme === 'dark'
+                    ? 'bg-[#E50914] text-white shadow-sm'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+                }`}
+              >
+                Dark
               </button>
             </div>
           </div>
         </div>
 
-
         {/* Privacy & Data Management */}
-        <div className="bg-gray-50 dark:bg-netflix-gray border border-red-500/20 rounded-lg p-4 sm:p-5 md:p-6 transition-colors">
-          <h2 className="text-red-500 dark:text-red-400 text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 transition-colors">
+        <div className="bg-white dark:bg-[#141414] border border-red-500/20 rounded-xl p-5 sm:p-6 shadow-sm transition-colors">
+          <h2 className="text-red-500 dark:text-[#E50914] text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
             Privacy & Data
           </h2>
           
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-col divide-y divide-gray-100 dark:divide-[#262626]">
+            <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-gray-900 dark:text-white font-medium text-sm sm:text-base">Clear Watch History</h3>
+                <h3 className="text-gray-900 dark:text-white font-semibold text-sm">Clear Watch History</h3>
                 <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-0.5">
                   Reset your "Continue Watching" progress permanently.
                 </p>
               </div>
               <button
                 onClick={() => setShowHistoryModal(true)}
-                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white px-4 py-2 rounded text-sm font-medium transition"
+                className="bg-gray-100 hover:bg-gray-200 dark:bg-[#1f1f1f] dark:hover:bg-[#2a2a2a] text-gray-900 dark:text-white border border-gray-200 dark:border-[#2a2a2a] px-5 py-2 rounded-lg text-sm font-semibold transition whitespace-nowrap"
               >
                 Clear History
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <h3 className="text-red-500 font-medium text-sm sm:text-base">Delete Account</h3>
+                <h3 className="text-[#E50914] font-semibold text-sm">Delete Account</h3>
                 <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mt-0.5">
                   Permanently delete your account and all associated data.
                 </p>
               </div>
               <button
                 onClick={() => setShowDeleteModal(true)}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm font-medium transition"
+                className="bg-red-50 hover:bg-red-100 dark:bg-[#E50914]/10 dark:hover:bg-[#E50914]/20 text-[#E50914] border border-red-200 dark:border-[#E50914]/30 px-5 py-2 rounded-lg text-sm font-semibold transition whitespace-nowrap"
               >
                 Delete Account
               </button>
@@ -194,11 +208,14 @@ function SettingsPage() {
         </div>
 
         {/* Back to Home */}
-        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="mt-8 flex justify-center">
           <button
             onClick={handleBackToHomeClick}
-            className="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white px-5 py-3 rounded font-medium transition-all text-sm sm:text-base touch-target"
+            className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-sm font-medium"
           >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
             Back to Home
           </button>
         </div>

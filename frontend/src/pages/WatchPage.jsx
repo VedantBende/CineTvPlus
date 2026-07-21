@@ -111,7 +111,7 @@ function WatchPage() {
       fetchAnimeDetails(tmdbId).then(data => {
         // Do not show seasons/episodes for Anime Movies
         if (data && data.episodes && data.format !== 'MOVIE') {
-          setTvSeasons([{ season_number: 1, episode_count: data.episodes, name: "Season 1" }]);
+          setTvSeasons([{ season_number: data.currentSeason || 1, episode_count: data.episodes, name: `Season ${data.currentSeason || 1}` }]);
         }
       }).catch(err => console.error("Failed to fetch anime episodes:", err));
     } else if (mediaType === 'tv' && tmdbId) {

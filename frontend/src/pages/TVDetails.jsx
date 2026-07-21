@@ -37,6 +37,16 @@ function TVDetails() {
   const loaderTimerRef = useRef(null);
 
   useEffect(() => {
+    if (show) {
+      if (isAnimeMode && show.currentSeason) {
+        setSelectedSeason(show.currentSeason);
+      } else {
+        setSelectedSeason(1);
+      }
+    }
+  }, [show, isAnimeMode]);
+
+  useEffect(() => {
     setEpisodeLimit(33);
   }, [selectedSeason]);
 
@@ -162,9 +172,8 @@ function TVDetails() {
         `/watch?id=${show.tmdbId}&type=${isAnimeMode ? "anime" : "movie"}`,
       );
     } else {
-      // Start with Season 1, Episode 1
       navigate(
-        `/watch?id=${show.tmdbId}&type=${isAnimeMode ? "anime" : "tv"}&season=1&episode=1`,
+        `/watch?id=${show.tmdbId}&type=${isAnimeMode ? "anime" : "tv"}&season=${selectedSeason}&episode=1`,
       );
     }
   };
@@ -213,9 +222,9 @@ function TVDetails() {
           {/* Metadata - Responsive */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 md:gap-4 mb-2 sm:mb-4 md:mb-6">
             {show.rating && (
-              <div className="flex items-center space-x-1 sm:space-x-2 bg-yellow-500 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm">
+              <div className="flex items-center space-x-1 sm:space-x-1.5 bg-[#EAB308] px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm shadow-md">
                 <svg
-                  className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -227,21 +236,21 @@ function TVDetails() {
               </div>
             )}
             {show.format === "MOVIE" ? (
-              <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm backdrop-blur-sm">
+              <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-md">
                 Movie
               </span>
             ) : show.seasons ? (
-              <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm backdrop-blur-sm">
+              <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-md">
                 {show.seasons} Season{show.seasons > 1 ? "s" : ""}
               </span>
             ) : null}
             {show.format !== "MOVIE" && show.episodes && (
-              <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm backdrop-blur-sm">
+              <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold shadow-md">
                 {show.episodes} Episodes
               </span>
             )}
             {show.genres && show.genres.length > 0 && (
-              <span className="text-white bg-white/20 px-2 py-1 sm:px-3 rounded text-xs sm:text-sm line-clamp-1 backdrop-blur-sm">
+              <span className="text-white bg-[#333333]/90 border border-white/10 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md text-xs sm:text-sm font-semibold line-clamp-1 shadow-md">
                 {show.genres
                   .slice(0, 2)
                   .map((g) => g.name)
@@ -276,20 +285,20 @@ function TVDetails() {
           </div>
 
           {/* Action Buttons - Responsive */}
-          <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-5">
             <button
               onClick={handleWatchFirstEpisode}
-              className="bg-white text-black px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3 lg:px-8 rounded text-sm sm:text-base font-semibold hover:bg-gray-200 transition-all flex items-center space-x-1.5 sm:space-x-2 shadow-lg transform hover:scale-105 touch-target"
+              className="bg-white text-black px-6 py-2.5 sm:px-8 sm:py-3 rounded-xl text-sm sm:text-base font-bold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 shadow-xl hover:-translate-y-1 touch-target"
             >
               <svg
-                className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path d="M8 5v14l11-7z" />
               </svg>
               <span className="hidden xs:inline">
-                {show.format === "MOVIE" ? "Play" : "Play S1 E1"}
+                {show.format === "MOVIE" ? "Play" : `Play S${selectedSeason} E1`}
               </span>
               <span className="xs:hidden">Play</span>
             </button>
@@ -298,10 +307,10 @@ function TVDetails() {
               <button
                 onClick={toggleWatchlist}
                 disabled={watchlistLoading}
-                className="bg-white/10 dark:bg-gray-700 dark:bg-opacity-70 text-white px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 rounded text-sm sm:text-base font-semibold hover:bg-white/20 dark:hover:bg-opacity-90 transition-all flex items-center space-x-1.5 sm:space-x-2 backdrop-blur-sm disabled:opacity-50 touch-target border border-white/20 dark:border-transparent shadow-md"
+                className="bg-black/40 hover:bg-black/60 border border-white/20 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 flex items-center justify-center space-x-2 backdrop-blur-md shadow-lg hover:-translate-y-1 disabled:opacity-50 disabled:hover:translate-y-0 touch-target"
               >
                 <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill={isInWatchlist ? "#E50914" : "none"}
                   stroke={isInWatchlist ? "#E50914" : "currentColor"}
                   viewBox="0 0 24 24"
@@ -327,10 +336,10 @@ function TVDetails() {
                 href={`https://www.youtube.com/watch?v=${show.trailer}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 dark:bg-gray-700 dark:bg-opacity-70 text-white px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 rounded text-sm sm:text-base font-semibold hover:bg-white/20 dark:hover:bg-opacity-90 transition-all flex items-center space-x-1.5 sm:space-x-2 backdrop-blur-sm touch-target border border-white/20 dark:border-transparent shadow-md"
+                className="bg-black/40 hover:bg-black/60 border border-white/20 text-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 flex items-center justify-center space-x-2 backdrop-blur-md shadow-lg hover:-translate-y-1 touch-target"
               >
                 <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -385,9 +394,9 @@ function TVDetails() {
 
                 {/* Season Selection Pills */}
                 <div className="flex overflow-x-auto no-scrollbar gap-2 sm:gap-3 mb-6 pb-2 border-b border-gray-200 dark:border-gray-800">
-                  {[...Array(show.seasons || 1)].map((_, i) => {
-                    const seasonNum = i + 1;
-                    const isActive = selectedSeason === seasonNum;
+                  {show.seasonsData?.filter(s => s.season_number > 0).map((seasonData, i) => {
+                    const seasonNum = seasonData.season_number;
+                    const isActive = (selectedSeason || show?.currentSeason || 1) === seasonNum;
                     return (
                       <button
                         key={i}
@@ -398,7 +407,7 @@ function TVDetails() {
                             : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
                         }`}
                       >
-                        Season {seasonNum}
+                        {seasonData.name || `Season ${seasonNum}`}
                         {isActive && (
                           <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#E50914] rounded-t-lg" />
                         )}
@@ -419,7 +428,7 @@ function TVDetails() {
 
                   return (
                     <div className="w-full">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
                         {[...Array(epCount)].map((_, i) => {
                           const epNum = i + 1;
                           return (
@@ -430,25 +439,26 @@ function TVDetails() {
                                   `/watch?id=${show.tmdbId}&type=${isAnimeMode ? "anime" : "tv"}&season=${selectedSeason}&episode=${epNum}`,
                                 )
                               }
-                              className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 dark:bg-[#1a1a1a] dark:hover:bg-[#262626] text-gray-900 dark:text-white p-3 sm:p-4 rounded-xl transition-all duration-300 group border border-transparent hover:border-gray-200 dark:hover:border-gray-700"
+                              className="relative flex items-center justify-center bg-white dark:bg-[#141414] hover:bg-gray-50 dark:hover:bg-[#1f1f1f] text-gray-900 dark:text-white p-3 sm:p-4 rounded-xl transition-all duration-300 group border border-gray-100 dark:border-[#262626] hover:border-gray-300 dark:hover:border-gray-500 shadow-sm hover:shadow-md overflow-hidden min-h-[60px]"
                             >
-                              <div className="flex items-center gap-4">
-                                <span className="text-2xl font-black text-gray-300 dark:text-gray-700 group-hover:text-gray-400 dark:group-hover:text-gray-500 transition-colors">
-                                  {epNum}
+                              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#E50914] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                              
+                              <span className="absolute left-3 sm:left-4 text-2xl font-black text-gray-200 dark:text-[#2a2a2a] group-hover:text-gray-300 dark:group-hover:text-[#3a3a3a] transition-colors w-6 sm:w-8 text-center z-10">
+                                {epNum}
+                              </span>
+
+                              <div className="flex flex-col items-center justify-center z-10 w-full px-8 sm:px-12">
+                                <span className="text-sm font-bold text-gray-800 dark:text-gray-200 group-hover:text-[#E50914] transition-colors leading-tight whitespace-nowrap text-center">
+                                  Episode {epNum}
                                 </span>
-                                <div className="flex flex-col items-start">
-                                  <span className="text-sm font-bold text-gray-800 dark:text-gray-200 group-hover:text-[#E50914] transition-colors leading-tight">
-                                    Episode {epNum}
-                                  </span>
-                                  <span className="text-xs text-gray-500 dark:text-gray-500 font-medium mt-0.5">
-                                    Season {selectedSeason}
-                                  </span>
-                                </div>
+                                <span className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5 text-center">
+                                  Season {selectedSeason}
+                                </span>
                               </div>
-                              <div className="w-8 h-8 rounded-full bg-white dark:bg-[#0f0f0f] shadow-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 border border-gray-100 dark:border-gray-800">
+
+                              <div className="absolute right-2 sm:right-4 hidden xs:flex w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gray-100 dark:bg-[#2a2a2a] items-center justify-center opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 transform scale-90 sm:scale-75 group-hover:scale-100 z-10 text-gray-400 group-hover:text-[#E50914] shadow-sm">
                                 <svg
-                                  className="w-3.5 h-3.5 text-[#E50914] ml-0.5"
-                                  fill="currentColor"
+                                  className="w-3 h-3 sm:w-4 sm:h-4 ml-0.5 fill-current"
                                   viewBox="0 0 24 24"
                                 >
                                   <path d="M8 5v14l11-7z" />
@@ -607,49 +617,56 @@ function TVDetails() {
               </div>
             )}
 
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 sm:p-5 md:p-6 border border-gray-100 dark:border-transparent transition-colors">
-              <h3 className="text-gray-900 dark:text-white text-base sm:text-lg font-bold mb-3 sm:mb-4 transition-colors">
+            <div className="bg-white dark:bg-[#141414] rounded-xl p-5 sm:p-6 border border-gray-100 dark:border-[#262626] shadow-sm transition-colors">
+              <h3 className="text-gray-900 dark:text-white text-base sm:text-lg font-bold mb-4 transition-colors flex items-center gap-2">
+                <svg className="w-5 h-5 text-[#E50914]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
                 Details
               </h3>
-              <div className="space-y-2 sm:space-y-3">
+              <div className="flex flex-col divide-y divide-gray-100 dark:divide-[#262626]">
                 {show.year && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">
-                      First Aired
-                    </span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">
-                      {show.year}
-                    </p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-sm font-medium">First Aired</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{show.year}</span>
                   </div>
                 )}
                 {show.seasons && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">
-                      Seasons
-                    </span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">
-                      {show.seasons}
-                    </p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                      </svg>
+                      <span className="text-sm font-medium">Seasons</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{show.seasons}</span>
                   </div>
                 )}
                 {show.episodes && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">
-                      Total Episodes
-                    </span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">
-                      {show.episodes}
-                    </p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                      </svg>
+                      <span className="text-sm font-medium">Total Episodes</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{show.episodes}</span>
                   </div>
                 )}
                 {show.rating && (
-                  <div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm block mb-1 transition-colors">
-                      Rating
-                    </span>
-                    <p className="text-gray-900 dark:text-white text-sm sm:text-base transition-colors">
-                      {show.rating}/10
-                    </p>
+                  <div className="py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                      <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <span className="text-sm font-medium">Rating</span>
+                    </div>
+                    <span className="text-gray-900 dark:text-white font-semibold text-sm">{show.rating}/10</span>
                   </div>
                 )}
               </div>
