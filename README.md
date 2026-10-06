@@ -32,6 +32,7 @@ A full-stack, OTT-style streaming platform designed to provide a premium cinemat
 - **Graceful Maintenance Mode**: If third-party services (like AniList) experience downtime, the platform gracefully intercepts the failure and displays a branded, non-intrusive "Service Notice" maintenance screen rather than generic error traces.
 - **Holographic Video Transitions**: Toggling between CineTv+ and AniTv+ modes triggers a stunning, full-screen video animation tailored for desktop and mobile orientations. 
 - **Zero-Wait Mode Swapping**: While the transition video plays, the application intelligently fetches and renders the new mode's data completely hidden in the background, resulting in a perfect 0-loading-screen switch.
+- **📡 Live TV Integration**: Browse and stream over 1,000+ live television channels globally. Features an ultra-fast virtualized grid, category-based filtering, state caching via Zustand, and native DRM player embedding for smooth playback without third-party lag.
 - **📱 Progressive Web App (PWA)**: Installable as a standalone app with offline support, intelligent caching, and a custom UI update prompt.
 
 ### 📱 Progressive Web App (PWA) Architecture
@@ -267,6 +268,9 @@ VITE_TRANSITION_VIDEO_MOBILE_TO_STANDARD=your_mobile_video_url
 
 # Otaku Link
 VITE_OTAKU_LIST_URL=your_link
+
+# Live TV API
+VITE_LIVETV_API_URL=your_link
 ```
 Start the frontend development server:
 ```bash

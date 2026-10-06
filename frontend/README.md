@@ -51,6 +51,12 @@ A dynamic `ContinueWatching` component that fetches user's watch history seamles
 - **Video Transitions**: Toggling between CineTv+ and AniTv+ modes triggers a stunning, full-screen video animation tailored for desktop and mobile orientations.
 - **Zero-Wait Mode Swapping**: While the transition video plays, the application intelligently fetches and renders the new mode's data completely hidden in the background, resulting in a perfect 0-loading-screen switch.
 
+### 10. Live TV Experience
+A dedicated offering of 1,000+ live television channels globally. 
+- **Virtualized Rendering**: Implements infinite scrolling and DOM virtualization to render thousands of channels with zero lag.
+- **State Persistence**: Heavily utilizes Zustand (`mediaStore`) to cache the entire channel catalog, ensuring instant load times when navigating back and forth.
+- **Native Embedded Player**: Bypasses complex DRM/ClearKey issues by seamlessly wrapping the provider's native iframe, enhanced with a custom, theme-aware UI overlay.
+
 ---
 
 ## ⚙️ Local Development Setup
@@ -107,6 +113,9 @@ VITE_TRANSITION_VIDEO_MOBILE_TO_STANDARD=your_mobile_video_url
 
 # Otaku Link
 VITE_OTAKU_LIST_URL=your_link
+
+# Live TV API
+VITE_LIVETV_API_URL=your_link
 ```
 
 3. **Start the Development Server**:

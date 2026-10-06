@@ -320,6 +320,51 @@ function PageSkeleton({ type = 'home' }) {
     );
   }
 
+  if (type === 'livetv') {
+    return (
+      <div className="container-custom pt-24 pb-12 min-h-screen">
+        {/* Header Skeleton */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 px-4 sm:px-0">
+          <div>
+            <div className="h-10 w-48 bg-zinc-800 animate-pulse rounded border-l-4 border-transparent pl-3 mb-2" />
+            <div className="h-5 w-64 bg-zinc-800 animate-pulse rounded" />
+          </div>
+          <div className="w-full md:w-96 h-12 bg-zinc-900 animate-pulse rounded-full border border-zinc-800" />
+        </div>
+
+        {/* Categories Skeleton */}
+        <div className="flex gap-2 px-4 sm:px-0 mb-6 overflow-hidden">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className={`flex-shrink-0 h-8 rounded-full bg-zinc-900 animate-pulse border border-zinc-800 ${i === 0 ? 'w-16' : 'w-24'}`} />
+          ))}
+        </div>
+
+        {/* Bento Grid Skeleton */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 auto-rows-[200px]">
+          {[...Array(15)].map((_, i) => {
+            const isFeatured = i === 0;
+            return (
+              <div 
+                key={i}
+                className={`relative rounded-xl bg-zinc-900 animate-pulse border border-zinc-800/80 shadow-md flex flex-col justify-end p-4 ${
+                  isFeatured ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'
+                }`}
+              >
+                {/* Simulated content placeholders */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="h-6 w-16 bg-zinc-800 rounded-md" />
+                  <div className="h-4 w-6 bg-zinc-800 rounded" />
+                </div>
+                <div className={`bg-zinc-800 rounded mb-2 ${isFeatured ? 'h-6 w-3/4' : 'h-4 w-3/4'}`} />
+                <div className={`bg-zinc-800 rounded ${isFeatured ? 'h-4 w-1/2' : 'h-3 w-1/2'}`} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
   return null;
 }
 

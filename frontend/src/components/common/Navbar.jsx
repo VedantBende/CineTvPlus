@@ -100,6 +100,12 @@ function Navbar() {
               <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
               <span>TV Shows</span>
             </Link>
+            {!isAnimeMode && (
+              <Link to="/live-tv" className={`transition flex items-center space-x-1.5 text-sm lg:text-base font-medium ${isActive('/live-tv') ? 'text-netflix-red' : 'text-gray-500 dark:text-gray-400 hover:text-netflix-red dark:hover:text-white'}`}>
+                <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.072 0a5 5 0 010 7.07M12 15a3 3 0 100-6 3 3 0 000 6z" /></svg>
+                <span>Live TV</span>
+              </Link>
+            )}
             {isSignedIn && (
               <Link to="/favorites" className={`transition flex items-center space-x-1.5 text-sm lg:text-base font-medium ${isActive('/favorites') ? 'text-netflix-red' : 'text-gray-500 dark:text-gray-400 hover:text-netflix-red dark:hover:text-white'}`}>
                 <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
@@ -117,8 +123,8 @@ function Navbar() {
             <div className={`transition-all duration-300 shrink-0 ${isSearchOpen ? 'w-0 opacity-0 hidden sm:block sm:w-0 m-0 p-0 overflow-hidden' : 'w-auto opacity-100'}`}>
               <AnimeToggle />
             </div>
-            {/* Theme Toggle - Hidden on small mobile */}
-            <div className="hidden xs:flex items-center">
+            {/* Theme Toggle - Hidden on small mobile and when search is open */}
+            <div className={`transition-all duration-300 shrink-0 ${isSearchOpen ? 'w-0 opacity-0 hidden m-0 p-0 overflow-hidden' : 'hidden xs:flex items-center w-auto opacity-100'}`}>
               <ThemeToggle />
             </div>
 
@@ -282,6 +288,15 @@ function Navbar() {
               >
                 TV Shows
               </Link>
+              {!isAnimeMode && (
+                <Link 
+                  to="/live-tv" 
+                  className={`block py-3 px-4 transition text-base font-medium touch-target border-l-2 ${isActive('/live-tv') ? 'text-netflix-red bg-netflix-red/10 border-netflix-red' : 'text-gray-900 dark:text-white hover:text-netflix-red dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 border-transparent'}`} 
+                  onClick={closeMobileMenu}
+                >
+                  Live TV
+                </Link>
+              )}
               {isSignedIn ? (
                 <>
                   <Link 

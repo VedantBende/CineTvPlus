@@ -21,6 +21,8 @@ const FavoritesPage = lazy(() => import('../pages/FavoritesPage'));
 const SettingsPage = lazy(() => import('../pages/SettingsPage'));
 const AdminPage = lazy(() => import('../pages/AdminPage'));
 const ProviderPage = lazy(() => import('../pages/ProviderPage'));
+const LiveTVPage = lazy(() => import('../pages/LiveTVPage'));
+const LiveTVWatchPage = lazy(() => import('../pages/LiveTVWatchPage'));
 
 import PageSkeleton from '../components/ui/PageSkeleton';
 
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
       {
         path: 'tv',
         element: <TVShowsPage />
+      },
+      {
+        path: 'live-tv',
+        element: <LiveTVPage />
+      },
+      {
+        path: 'live-tv/watch/:id',
+        element: <LiveTVWatchPage />
       },
       {
         path: 'search',

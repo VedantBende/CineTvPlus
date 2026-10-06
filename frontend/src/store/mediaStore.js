@@ -45,6 +45,12 @@ const useMediaStore = create(
       providerCache: {},       // { [key]: { heroMovies, gridContent } }
       providerCacheFetchedAt: {}, // { [key]: timestamp }
 
+      // ──────────────────────────────────────────
+      // LIVETV CACHE
+      // ──────────────────────────────────────────
+      liveTvData: null,
+      liveTvFetchedAt: null,
+
       // Actions
       setCurrentMedia: (media) => set({ currentMedia: media, error: null }),
       setLoading: (isLoading) => set({ isLoading }),
@@ -72,6 +78,7 @@ const useMediaStore = create(
         providerCache: { ...state.providerCache, [key]: data },
         providerCacheFetchedAt: { ...state.providerCacheFetchedAt, [key]: Date.now() },
       })),
+      setLiveTvData: (data) => set({ liveTvData: data, liveTvFetchedAt: Date.now() }),
       
       clearAll: () => set({
         currentMedia: null,
@@ -94,6 +101,8 @@ const useMediaStore = create(
         tvFetchedAtAnime: null,
         providerCache: {},
         providerCacheFetchedAt: {},
+        liveTvData: null,
+        liveTvFetchedAt: null,
       })
     }),
     {
@@ -114,7 +123,9 @@ const useMediaStore = create(
         tvDataAnime: state.tvDataAnime,
         tvFetchedAtAnime: state.tvFetchedAtAnime,
         providerCache: state.providerCache,
-        providerCacheFetchedAt: state.providerCacheFetchedAt
+        providerCacheFetchedAt: state.providerCacheFetchedAt,
+        liveTvData: state.liveTvData,
+        liveTvFetchedAt: state.liveTvFetchedAt
       }),
     }
   )
