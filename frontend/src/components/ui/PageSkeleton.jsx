@@ -340,7 +340,7 @@ function PageSkeleton({ type = 'home' }) {
         </div>
 
         {/* Bento Grid Skeleton */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 auto-rows-[200px]">
+        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 xs:gap-3 sm:gap-4 md:gap-5 auto-rows-[120px] xs:auto-rows-[140px] sm:auto-rows-[160px] md:auto-rows-[200px]">
           {[...Array(15)].map((_, i) => {
             const isFeatured = i === 0;
             return (

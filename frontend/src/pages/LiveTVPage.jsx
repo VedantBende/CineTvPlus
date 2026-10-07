@@ -63,10 +63,17 @@ function LiveTVPage() {
   });
   const [error, setError] = useState(null);
   
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    return sessionStorage.getItem('livetv_category') || 'All';
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem('livetv_category', selectedCategory);
+  }, [selectedCategory]);
   const [searchQuery, setSearchQuery] = useState('');
   const [displayCount, setDisplayCount] = useState(50);
   const observer = useRef();
+  const selectedCategoryRef = useRef(null);
 
   const [categories, setCategories] = useState(() => {
     if (liveTvData) {
@@ -74,6 +81,15 @@ function LiveTVPage() {
     }
     return ['All'];
   });
+
+  useEffect(() => {
+    if (selectedCategoryRef.current) {
+      // Small timeout ensures the DOM has fully painted the pills before calculating scroll
+      setTimeout(() => {
+        selectedCategoryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }, 50);
+    }
+  }, [categories, selectedCategory]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -190,7 +206,7 @@ function LiveTVPage() {
           </div>
           <input
             type="text"
-            placeholder="Search programs..."
+            placeholder="Search channels..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="block w-full pl-10 pr-3 py-2 border-0 rounded-lg leading-5 bg-zinc-900/60 text-white placeholder-zinc-500 ring-1 ring-inset ring-zinc-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-netflix-red sm:text-sm transition-shadow shadow-sm"
@@ -214,6 +230,7 @@ function LiveTVPage() {
       {categories.map(cat => (
         <button
           key={cat}
+          ref={selectedCategory === cat ? selectedCategoryRef : null}
           onClick={() => setSelectedCategory(cat)}
           className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
             selectedCategory === cat 
@@ -232,7 +249,7 @@ function LiveTVPage() {
       {renderHeader()}
       {renderCategoryPills()}
       
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 auto-rows-[200px]">
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 xs:gap-3 sm:gap-4 md:gap-5 auto-rows-[120px] xs:auto-rows-[140px] sm:auto-rows-[160px] md:auto-rows-[200px]">
         {displayedChannels.map((channel, index) => {
           const isFeatured = index === 0 && selectedCategory === 'All' && !searchQuery; // First item is featured 2x2
           const meta = generateFakeMetadata(channel.id);
@@ -267,23 +284,20 @@ function LiveTVPage() {
               <div className="absolute bottom-0 left-0 right-0 h-3/5 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-500 pointer-events-none"></div>
               
               {/* Content */}
-              <div className="relative p-3 sm:p-4 z-10 w-full group-hover:opacity-0 transition-opacity duration-500">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-1.5 bg-black/50 backdrop-blur-md px-2 py-1 rounded-md border border-white/10">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse"></span>
-                    <span className="text-[10px] uppercase font-bold text-white tracking-wider">Live</span>
+              <div className="relative p-1.5 xs:p-2 sm:p-3 md:p-4 z-10 w-full group-hover:opacity-0 transition-opacity duration-500">
+                <div className="flex items-center justify-between mb-1 xs:mb-1.5 sm:mb-2">
+                  <div className="flex items-center gap-1 sm:gap-1.5 bg-black/50 backdrop-blur-md px-1.5 py-0.5 xs:px-2 xs:py-1 rounded-md border border-white/10">
+                    <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-red-600 animate-pulse"></span>
+                    <span className="text-[8px] xs:text-[9px] sm:text-[10px] uppercase font-bold text-white tracking-wider">Live</span>
                   </div>
                   {meta.isHD && (
-                    <span className="text-[10px] font-bold text-zinc-400 border border-zinc-700 px-1 rounded">HD</span>
+                    <span className="text-[8px] xs:text-[9px] sm:text-[10px] font-bold text-zinc-400 border border-zinc-700 px-0.5 xs:px-1 rounded">HD</span>
                   )}
                 </div>
                 
-                <h3 className={`font-bold text-white truncate drop-shadow-md ${isFeatured ? 'text-xl sm:text-2xl mb-1' : 'text-sm sm:text-base mb-0.5'}`}>
+                <h3 className={`font-bold text-white truncate drop-shadow-md ${isFeatured ? 'text-sm xs:text-base sm:text-xl md:text-2xl mb-0.5' : 'text-[10px] xs:text-xs sm:text-sm md:text-base mb-0'}`}>
                   {channel.name}
                 </h3>
-                <p className={`text-zinc-300 truncate drop-shadow-md ${isFeatured ? 'text-sm sm:text-base mb-1' : 'text-xs mb-1'}`}>
-                  {meta.currentShow}
-                </p>
               </div>
             </div>
           );
