@@ -14,16 +14,12 @@ const ALPHA_MOVIE = import.meta.env.VITE_PLAYER_ALPHA_MOVIE;
 const ALPHA_TV    = import.meta.env.VITE_PLAYER_ALPHA_TV;
 const BETA_MOVIE  = import.meta.env.VITE_PLAYER_BETA_MOVIE;
 const BETA_TV     = import.meta.env.VITE_PLAYER_BETA_TV;
-const ETA_MOVIE   = import.meta.env.VITE_PLAYER_ETA_MOVIE;
-const ETA_TV      = import.meta.env.VITE_PLAYER_ETA_TV;
 const GAMMA_MOVIE   = import.meta.env.VITE_PLAYER_GAMMA_MOVIE;
 const GAMMA_TV      = import.meta.env.VITE_PLAYER_GAMMA_TV;
 const DELTA_MOVIE   = import.meta.env.VITE_PLAYER_DELTA_MOVIE;
 const DELTA_TV      = import.meta.env.VITE_PLAYER_DELTA_TV;
 const EPSILON_MOVIE = import.meta.env.VITE_PLAYER_EPSILON_MOVIE;
 const EPSILON_TV    = import.meta.env.VITE_PLAYER_EPSILON_TV;
-const ZETA_MOVIE    = import.meta.env.VITE_PLAYER_ZETA_MOVIE;
-const ZETA_TV       = import.meta.env.VITE_PLAYER_ZETA_TV;
 
 // ─── Player Definitions ───────────────────────────────────────────────
 
@@ -103,61 +99,12 @@ export const PLAYERS = {
   epsilon: {
     id: 'epsilon',
     label: 'Server Epsilon',
-    description: 'Enhanced · Reliable',
+    description: 'Alternative Source',
     getUrl: (tmdbId, mediaType, season, episode) => {
-      if (mediaType === 'tv') {
-        if (!season || !episode) {
-          console.warn('[Epsilon] TV requires season and episode');
-          return null;
-        }
+      if (mediaType === 'tv' && season && episode) {
         return `${EPSILON_TV}/${tmdbId}/${season}/${episode}`;
       }
       return `${EPSILON_MOVIE}/${tmdbId}`;
-    },
-  },
-
-  zeta: {
-    id: 'zeta',
-    label: 'Server Zeta',
-    description: 'Alternative Source',
-    getUrl: (tmdbId, mediaType, season, episode) => {
-      if (mediaType === 'tv' && season && episode) {
-        return `${ZETA_TV}/${tmdbId}/${season}/${episode}`;
-      }
-      return `${ZETA_MOVIE}/${tmdbId}`;
-    },
-  },
-
-  eta: {
-    id: 'eta',
-    label: 'Server Eta',
-    description: 'Alternative Source',
-    getUrl: (tmdbId, mediaType, season, episode, { autoplay = true, resumeTime = 0 } = {}) => {
-      let url = mediaType === 'tv'
-        ? `${ETA_TV}/${tmdbId}`
-        : `${ETA_MOVIE}/${tmdbId}`;
-
-      if (mediaType === 'tv' && season && episode) {
-        url += `/${season}/${episode}`;
-      }
-
-      const params = ['color=e50914'];
-
-      if (autoplay) {
-        params.push('autoPlay=true');
-      }
-
-      if (resumeTime && resumeTime > 10) {
-        const timeInSeconds = Math.floor(resumeTime);
-        params.push(`t=${timeInSeconds}`);
-      }
-
-      if (mediaType === 'tv') {
-        params.push('nextEpisode=true');
-        params.push('episodeSelector=true');
-      }
-
-      return params.length > 0 ? `${url}?${params.join('&')}` : url;
     },
   },  
 

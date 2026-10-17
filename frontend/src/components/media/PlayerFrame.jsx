@@ -221,14 +221,14 @@ function PlayerFrame({
   }, [tmdbId, mediaType, activeSeason, activeEpisode, getToken, animeOrigin, isAnimeServer]);
 
 
-  // ─── Shared Event Handler (Delta + Epsilon) ─────────────────────
+  // ─── Event Handler (Delta) ─────────────────────
   useEffect(() => {
-    // Only attach if active server is Delta or Epsilon
-    if (selectedPlayer !== 'delta' && selectedPlayer !== 'epsilon') return;
+    // Only attach if active server is Delta
+    if (selectedPlayer !== 'delta') return;
 
-    const TRUSTED_ORIGIN = import.meta.env.VITE_PLAYER_DELTA_EPSILON_ORIGIN;
+    const TRUSTED_ORIGIN = import.meta.env.VITE_PLAYER_DELTA_ORIGIN;
 
-    const handleDeltaEpsilonMessage = (event) => {
+    const handleDeltaMessage = (event) => {
       // Strict origin validation — NEVER process other origins
       if (event.origin !== TRUSTED_ORIGIN) return;
 
@@ -289,7 +289,7 @@ function PlayerFrame({
                   lastWatched: new Date().toISOString(),
                 };
                 updateProgress(getToken, progressData).catch(
-                  err => console.error('[Delta/Epsilon] Failed to save progress:', err)
+                  err => console.error('[Delta] Failed to save progress:', err)
                 );
               }
               break;
@@ -312,8 +312,8 @@ function PlayerFrame({
       }
     };
 
-    window.addEventListener('message', handleDeltaEpsilonMessage);
-    return () => window.removeEventListener('message', handleDeltaEpsilonMessage);
+    window.addEventListener('message', handleDeltaMessage);
+    return () => window.removeEventListener('message', handleDeltaMessage);
 
   }, [selectedPlayer, tmdbId, mediaType, activeSeason, activeEpisode, getToken]);
 
@@ -436,8 +436,8 @@ function PlayerFrame({
   }
 
 
-  // Restore fallback logic: strictly no sandbox parameters to prevent Server Zeta issues.
-  const iframeReferrer = selectedPlayer === 'zeta'
+  // Restore fallback logic: strictly no sandbox parameters to prevent Server Epsilon (vsembed) issues.
+  const iframeReferrer = selectedPlayer === 'epsilon'
     ? 'no-referrer'
     : isAnimeServer
       ? undefined
